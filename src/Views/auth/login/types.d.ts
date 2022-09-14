@@ -18,3 +18,11 @@ export type TDataError = {
   email?: boolean;
   password?: boolean;
 };
+
+export type TAuthLogin = {
+  data: {
+    formState: TDataForm;
+  };
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSubmitData: (e: FormEvent<HTMLFormElement>) => void;
+};

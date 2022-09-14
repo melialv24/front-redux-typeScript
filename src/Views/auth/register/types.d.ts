@@ -15,3 +15,11 @@ export type TDataForm = {
   password: string;
   password2: string;
 };
+
+export type TAuthRegister = {
+  data: {
+    formState: TDataForm;
+  };
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSubmitData: (e: FormEvent<HTMLFormElement>) => void;
+};
