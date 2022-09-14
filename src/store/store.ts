@@ -11,10 +11,7 @@ export const store = configureStore({
     }),
 });
 
-declare global {
-  type RootState = ReturnType<typeof store.getState>;
-}
-
-declare module "react-redux" {
-  interface DefaultRootState extends RootState {}
-}
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch

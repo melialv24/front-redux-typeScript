@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useAuthStore } from "../../../hooks/useAuthStore";
 import { AuthLoginC } from "./components";
 
 const initialValues = {
@@ -8,6 +9,7 @@ const initialValues = {
 
 export const AuthLoginV = () => {
   const [formState, setFormState] = useState(initialValues);
+  const { startLogin } = useAuthStore();
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState({
@@ -22,7 +24,8 @@ export const AuthLoginV = () => {
 
   const handleSubmitData = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ formState });
+    startLogin({ email: formState.email, password: formState.password });
+    onResetForm();
   };
   return (
     <AuthLoginC

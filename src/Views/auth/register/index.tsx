@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useAuthStore } from "../../../hooks/useAuthStore";
 import { AuthRegisterC } from "./components";
+import Swal from "sweetalert2";
 
 const initialValues = {
   name: "",
@@ -10,6 +12,7 @@ const initialValues = {
 
 export const AuthRegisterV = () => {
   const [formState, setFormState] = useState(initialValues);
+  const { startRegister } = useAuthStore();
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState({
@@ -24,7 +27,16 @@ export const AuthRegisterV = () => {
 
   const handleSubmitData = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ formState });
+    if (formState.password !== formState.password2) {
+      Swal.fire("Register Error", "Las contraseñas deben ser iguales", "error");
+      return;
+    }
+    startRegister({
+      email: formState.email,
+      password: formState.password,
+      name: formState.name,
+    });
+    onResetForm();
   };
 
   return (

@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { calendarApi } from "../api";
 import { onchecking, onLogin, onLogout, clearErrorMessage } from "../store";
 import { useAppSelector } from "./useActionsAxios";
-import { TError } from "./types";
 
 export const useAuthStore = () => {
   const { status, user, errorMessage } = useAppSelector((state) => state.auth);
@@ -19,7 +18,6 @@ export const useAuthStore = () => {
 
     try {
       const { data } = await calendarApi.post("/auth", { email, password });
-      console.log(data, "data");
       localStorage.setItem("token", data.token);
       localStorage.setItem("token-init-data", String(new Date().getTime()));
       dispatch(onLogin({ name: data.name, uid: data.uid }));
@@ -51,7 +49,7 @@ export const useAuthStore = () => {
       localStorage.setItem("token-init-data", String(new Date().getTime()));
       dispatch(onLogin({ name: data.name, uid: data.uid }));
     } catch (error) {
-      console.log(error as TError);
+      console.log(error);
       //dispatch(onLogout(error.response.data?.msg || "---"));
       setTimeout(() => {
         dispatch(clearErrorMessage());
