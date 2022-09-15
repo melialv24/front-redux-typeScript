@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "../hooks/useAuthStore";
 import { AuthLoginV } from "../Views";
 import { useEffect } from "react";
-import { AuthRegisterV } from "../Views/auth";
+import { AuthRegisterV, CalendarV } from "../Views";
 
 export const AppRouter = () => {
   const { status, checkAuthToken } = useAuthStore();
@@ -11,9 +11,13 @@ export const AppRouter = () => {
     checkAuthToken();
   }, []);
 
+  if (status === "checking") {
+    return <h3>Cargando...</h3>;
+  }
+
   return (
     <Routes>
-      {status !== "not-authenticated" ? (
+      {status === "not-authenticated" ? (
         <>
           <Route path="/auth/login" element={<AuthLoginV />} />
           <Route path="/auth/register" element={<AuthRegisterV />} />
@@ -21,7 +25,8 @@ export const AppRouter = () => {
         </>
       ) : (
         <>
-          <Route path="/auth/login" element={<AuthLoginV />} />
+          <Route path="/" element={<CalendarV />} />
+          <Route path="/*" element={<Navigate to="/" />} />
         </>
       )}
     </Routes>

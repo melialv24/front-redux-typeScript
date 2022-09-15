@@ -24,8 +24,8 @@ export const AuthLoginV = () => {
 
   const handleSubmitData = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log({ email: formState.email, password: formState.password });
     startLogin({ email: formState.email, password: formState.password });
-    onResetForm();
   };
   return (
     <AuthLoginC
